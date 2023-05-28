@@ -3,6 +3,8 @@ package org.launchcode.techjobs.persistent.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employer extends AbstractEntity {
@@ -10,6 +12,9 @@ public class Employer extends AbstractEntity {
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters long")
     private String location;
+    @OneToMany
+    @JoinColumn
+    private List<Job> jobs = new ArrayList<>();
 
     public Employer(String location) {
         this.location = location;
