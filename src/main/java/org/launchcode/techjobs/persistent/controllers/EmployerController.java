@@ -22,7 +22,7 @@ public class EmployerController {
     public String displayAllEmployers(Model model) {
         model.addAttribute("title", "All Employers");
         model.addAttribute("employers", employerRepository.findAll());
-        return "employer/index";
+        return "employers/index";
     }
 
     @GetMapping("add")
