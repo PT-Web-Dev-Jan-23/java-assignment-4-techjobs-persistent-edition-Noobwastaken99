@@ -26,11 +26,14 @@ public class HomeController {
     private EmployerRepository employerRepository;
     @Autowired
     private SkillRepository skillRepository;
+    @Autowired
+    private JobRepository jobRepository;
 
     @RequestMapping("")
     public String index(Model model) {
 
         model.addAttribute("title", "My Jobs");
+        model.addAttribute("jobs", jobRepository.findAll());
 
         return "index";
     }
@@ -41,6 +44,7 @@ public class HomeController {
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
         model.addAttribute(new Job());
+
         return "add";
     }
 
@@ -57,6 +61,8 @@ public class HomeController {
 
         newJob.setEmployer(result.get());
         newJob.setSkills(skillObjs);
+        jobRepository.save(newJob);
+
         return "redirect:";
     }
 
