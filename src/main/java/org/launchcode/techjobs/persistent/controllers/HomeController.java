@@ -51,7 +51,9 @@ public class HomeController {
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                        Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
-        Optional<Employer> result = employerRepository.findById(employerId);
+        Employer none = new Employer("N/A");
+        none.setName("N/A");
+        Employer employer = employerRepository.findById(employerId).orElse(none);
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
 
         if (errors.hasErrors()) {
@@ -59,7 +61,7 @@ public class HomeController {
             return "add";
         }
 
-//        newJob.setEmployer(result.get()); /*Why is this causing the test to fail???*/
+        newJob.setEmployer(employer);
         newJob.setSkills(skillObjs);
         jobRepository.save(newJob);
 
